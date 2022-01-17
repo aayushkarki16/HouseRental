@@ -1,0 +1,52 @@
+.main-wrapper{
+	height: 300px;
+    margin-top: 10px;
+	/*border: 1px solid red;*/
+	/*position: relative;*/
+}
+.image-wrapper{
+	border: 7px solid #fff;
+    /*outline: white solid 5px;*/
+	border-radius: 5px;
+	height: 290px;
+	width: 250px;
+/*	position: absolute;*/
+	left: 15%;
+	top: 1.5%;
+}
+
+
+.image-wrapper img{
+    height: 277px;
+	width: 237px;
+}
+
+.custom-btn{
+    background: #243b55;
+    position: relative;
+    bottom: 27%;
+    left: 30%;
+    visibility: hidden;
+}
+.image-wrapper:hover{
+	border: 7px solid #243b55;
+    /*outline: #243b55 solid 5px;*/
+    cursor: pointer;
+    background: rgba(0,0,0,0.3);
+    overflow: hidden;
+}
+.image-wrapper:hover .custom-btn{
+    visibility: visible;
+
+
+}
+.image-wrapper img:hover{
+
+    opacity: 0.4;
+}
+.custom-btn:hover .image-wrapper img{
+
+    opacity: 0.4;
+}
+
+

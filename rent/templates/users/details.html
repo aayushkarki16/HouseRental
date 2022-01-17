@@ -1,0 +1,39 @@
+{% extends 'rent/index.html' %}
+{% block title %} Details {% endblock %}
+{% block content %}
+{% for h in house %}
+<div class="card mb-3" style="width: 75%; margin: auto;">
+  <img src="{{h.image.url}}" class="card-img-top" alt="house image" style="height: 500px">
+  <div class="card-body" style="font-family: Courier, Arial, Helvetica">
+    <h1 class="card-title" id="myDIV" style="display: inline-block; text-decoration: underline;">{{h.location}}</h1><span><i class="fas fa-map-marker-alt" style="color:limegreen; font-size:43px; margin-left:10px;"></i></span>
+      <h4 style="padding-top: 20px; ">Contact Person: {{h.contact_person}}</h4>
+      <h4>Phone no: {{h.mobile}}</h4>
+      <h4>Rent type: {{h.rent_type}}</h4>
+      <h4>Client Preferred: {{h.client_type}}</h4>
+      <h4>Number and Type of rooms: {{h.room_number}}</h4>
+      <h4>More Details: {{h.more_details}}</h4>
+      <h4 style="color: red">Monthly Price: {{h.monthly_price}}</h4>
+
+  </div>
+
+</div>
+
+{% endfor %}
+<style>
+#myDIV {
+  text-decoration: underline;
+  animation: mymove 5s infinite;
+}
+
+@keyframes mymove {
+  50% {
+    text-decoration-color: red;
+  }
+}
+</style>
+<script>
+  function myFunction() {
+    window.alert("Delete Confirm");
+  }
+</script>
+{% endblock %}

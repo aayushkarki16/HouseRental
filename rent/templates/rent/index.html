@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    {% load static %}
+    <title>{% block title %}Index{% endblock %}</title>
+    <link rel="stylesheet" type="text/css" href="{% static 'styles/css/bootstrap.min.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'styles/css/main.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'styles/css/imagecard.css'%}">
+    <link rel="stylesheet" type="text/css" href="{% static 'styles/css/all.css'%}">
+    <link rel="stylesheet" type="text/css" href="{% static 'styles/css/bgimg.css'%}">
+    <link rel="stylesheet" type="text/css" href="{% static 'styles/css/searchbar.css'%}">
+    <script src="{% static 'styles/js/bootstrap.min.js'%}"></script>
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="{% static 'styles/js/all.js'%}"></script>
+    <script>
+        $(document).ready(function (){
+            $('.check-class').click(function (){
+                var txt ="";
+                $('.check-class:checked').each(function (){
+                    txt += $(this).val()+","
+                });
+                $('#checkValueId').val(txt);
+            });
+        });
+    </script>
+</head>
+<body>
+<nav class="navbar navbar-expand-lg ">
+  <div class="container-fluid">
+    <a class="navbar-brand" href="{% url 'index' %}">HouseRental</a>
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+        <li class="nav-item">
+          <a class="nav-link active" aria-current="page" href="{% url 'index' %}">Home</a>
+        </li>
+          {% if user.is_authenticated %}
+           <li class="nav-item">
+               <a class="nav-link active" aria-current="page" href="{% url 'profile' user.id %}">{{user.username}}</a>
+
+        </li>
+           <li class="nav-item">
+          <a class="nav-link" href="{% url 'logout_views' %}">Logout</a>
+        </li>
+          {% else %}
+        <li class="nav-item">
+          <a class="nav-link" href="{% url 'log' %}">Login</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="{% url 'signup' %}">Sign up</a>
+        </li>
+          {% endif %}
+      </ul>
+
+    </div>
+  </div>
+</nav>
+{% block content%}
+<div class="container-fluid index-img">
+<div class="row" >
+    <div class="col-7 search-filter" >
+        <form action="{% url 'search_rent'%}" method="post">{% csrf_token %}
+            <div class="form-group searchform" style="display: inline-block; margin-right: 15px; ">
+                <input class="form-control" type="text" placeholder="Baneshwor" name="search_location">
+            </div>
+            <div class="form-group searchfrom" style="display: inline-block; margin-right: 15px;">
+                <select class="form-control select-tag" style="padding:10px; width: 250px;" name="search_rent_type" >
+                    <option value="any">Select rent type</option>
+                     <option value="flat">Flat</option>
+                    <option value="single room">Single room</option>
+                     <option value="more than one room">More than one Room</option>
+                    <option value="whole house">Whole House</option>
+                </select>
+            </div>
+            <button class="btn btn-outline-success button-desgin" type="submit" style="padding: 10px; background: green; color: white">Search</button>
+                     {% if request.path == '/search_ministry' %}
+                        <button  type="submit" value="search">All Result </button>
+                    {% endif %}
+        </form>
+
+    </div>
+</div>
+</div>
+
+    {% if user.is_authenticated %}
+        <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal" style="left: 83%;
+            position:relative; font-size: 20px; padding: 13px 30px;">
+  Add Post
+</button>
+
+
+<!-- Modal -->
+<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Add Post</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <form class="addPostForm" method="post" action="{% url 'add_post_views'%}" enctype="multipart/form-data"> {% csrf_token %}
+      <input type="number" value="{{user.id}}" class="userId" name="user" style="display: none;">
+            <div class="form-group">
+    <label for="exampleFormControlInput1">Contact Person</label>
+    <input type="text" class="form-control" id="exampleFormControlInput0" placeholder="Aayush Karki" name="contact_person">
+  </div><br>
+  <div class="form-group">
+    <label for="exampleFormControlInput1">Location</label>
+    <input type="text" class="form-control" id="exampleFormControlInput1" placeholder="Baneshwor, Kathmandu" name="location">
+  </div><br>
+  <div class="form-group">
+    <label for="exampleFormControlInput2">Mobile number</label>
+    <input type="text" class="form-control" id="exampleFormControlInput2" placeholder="9819881040" name="mobile">
+  </div><br>
+  <div class="form-group">
+    <label for="exampleFormControlSelect1">Rent Type</label>
+    <select class="custom-select form-control" id="exampleFormControlSelect1" name="rent_type" >
+        <option selected>Open this select menu</option>
+      <option value="flat">Flat</option>
+      <option value="single room">Single room</option>
+      <option value="more than one room">More than one Room</option>
+      <option value="whole house">Whole House</option>
+        <option value="whole house and garden">Whole house and garden</option>
+    </select>
+  </div><br>
+   <div class="form-group">
+    <label for="exampleFormControlInput3">Number and Type of rooms</label>
+    <input type="text" class="form-control" id="exampleFormControlInput3" placeholder="2 rooms and 1 kitchen" name="room_number">
+  </div><br>
+   <div class="form-group">
+    <label for="exampleFormControlSelect1">Client Preferred</label>
+    <div class="custom-control custom-checkbox">
+        {% for clientcheck in clientchecks %}
+       <input type="checkbox" class="custom-control-input check-class"  value="{{clientcheck.client}}" name="client_type_a"><span>{{clientcheck.client}}</span>
+       {% endfor %}
+     </div>
+  </div><br>
+    <input type="text"  id="checkValueId" name="client_type" style="display: none;">
+  <div class="form-group">
+    <label for="exampleFormControlTextarea1">More Details(if any)</label>
+    <textarea class="form-control" id="exampleFormControlTextarea1" rows="3" name="more_details"></textarea>
+  </div><br>
+   <div class="form-group">
+    <label for="exampleFormControlInput9">Monthly Price</label>
+    <input type="text" class="form-control" id="exampleFormControlInput9" placeholder="10000" name="monthly_price">
+  </div><br>
+ <div class="custom-file">
+  <input type="file" class="custom-file-input" id="customFile" accept="image/*" name="image">
+  <label class="custom-file-label" for="customFile">Choose file</label>
+</div>
+
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+        <button type="submit" class="btn btn-primary">Save changes</button>
+      </div>
+      </form>
+      </div>
+    </div>
+  </div>
+</div>
+<script>
+    $('#myModal').on('shown.bs.modal', function () {
+  $('#myInput').trigger('focus')
+})
+</script>
+    {% endif %}
+
+
+<div class="container">
+	  <div class="row">
+          {% for house in houses%}
+		<div class="col-10 col-md-4 offset-1" style="padding: 10px;">
+			<div class="card" style="width: 100%;">
+				  <img class="card-img-top" src="{{house.image.url}}" alt="Card image cap" style="height: 400px; ">
+				  <div class="card-body">
+				    <h2 class="card-title" style="display: inline-block">{{house.location}}</h2><span><i class="fas fa-map-marker-alt" style="color:limegreen; font-size:33px; margin-left:10px;"></i></span>
+                      <h6 class="card-text">Contact Person: {{house.contact_person}}</h6>
+				    <h6 class="card-text">Phone: {{house.mobile}}</h6>
+				    <a href="{% url 'details' house.id %}" class="btn btn-primary">View Details</a>
+				  </div>
+			</div>
+		</div>
+          {% endfor %}
+      </div>
+</div>
+{% endblock %}
+
+</body>
+</html>

@@ -1,0 +1,46 @@
+
+
+.navbar a{
+    color: white;
+}
+
+body{
+    background: #ebebeb;
+}
+
+.input-box{
+    width: 350px;
+}
+
+.form-wrapper{
+    width: 500px;
+    height: inherit;
+    position: relative;
+    left: 35%;
+    margin-top: 20vh;
+    border: 5px solid #243b55;
+    border-radius: 10px;
+    text-align: center;
+    padding: 15px;
+}
+.form-wrapper input{
+    margin-left: 60px;
+}
+
+.addPostForm{
+    padding: 0px 10px 0px 10px;
+}
+
+
+
+/*.custom-checkbox input[type=checkbox]{*/
+/*    display: flex;*/
+/*    flex-direction: column;*/
+/*    justify-content: space-between;*/
+
+/*}*/
+
+/*.userId {*/
+/*    display: none;*/
+/*    background: red;*/
+/*}*/

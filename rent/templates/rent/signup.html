@@ -1,0 +1,42 @@
+{% extends 'rent/index.html' %}
+{% block title %}Sign up{% endblock %}
+{% block content %}
+    <div class="form-wrapper">
+    <form method="post" action="{% url 'signup' %}">
+        {% csrf_token %}
+
+         <div class="mb-3">
+        <label for="username" class="form-label ">Username</label>
+        {{form.username}}
+      </div>
+
+      <div class="mb-3">
+        <label for="exampleInputEmail1" class="form-label">Email address</label>
+        {{form.email}}
+        <div id="emailHelp" class="form-text">We'll never share your email with anyone else.</div>
+      </div>
+      <div class="mb-3">
+        <label for="exampleInputPassword1" class="form-label ">Password</label>
+        {{form.password1}}
+      </div>
+        <div class="mb-3">
+        <label for="exampleInputPassword2" class="form-label ">Re-Password</label>
+        {{form.password2}}
+      </div>
+      <button type="submit" class="btn btn-primary" onsubmit="errorFunc()">Submit</button>
+        <script>
+            function errorFunc(){
+            var msg = "{{form.errors}}";
+            if(msg != null)
+            {alert(msg)
+            }}
+
+        </script>
+
+
+
+    </form>
+    </div>
+
+
+{% endblock %}
